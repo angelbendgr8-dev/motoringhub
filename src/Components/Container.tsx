@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 import React from 'react';
 import {
   useRestyle,
@@ -9,6 +9,7 @@ import {
   BackgroundColorProps,
   composeRestyleFunctions,
   createBox,
+  useTheme,
 } from '@shopify/restyle';
 import {Theme} from '../theme';
 
@@ -23,12 +24,16 @@ const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([
 type Props = RestyleProps & {};
 const Container: React.FC<Props> = ({children, ...rest}) => {
   const props = useRestyle(restyleFunctions, rest);
+  const theme = useTheme();
+  const {primary} = theme.colors
   return (
     <Box
       {...props}
       flex={1}
       backgroundColor="background"
-      paddingTop={Platform.OS === 'android' ? 's' : 'm'}>
+      // paddingTop={Platform.OS === 'android' ? 's' : 'm'}
+    >
+      <StatusBar backgroundColor={primary} barStyle={'light-content'} />
       {children}
     </Box>
   );

@@ -7,10 +7,16 @@ import Toggle from 'react-native-vector-icons/AntDesign';
 import Bell from 'react-native-vector-icons/Fontisto';
 import {logo} from '../assets';
 import {useNavigation} from '@react-navigation/native';
+import Text from './Text';
 
-const HeadNav = ({}) => {
+type Props = {
+  leftIcons?: boolean;
+  hasSkip?: boolean;
+};
+const HeadNav: React.FC<Props> = ({leftIcons = true, hasSkip = false}) => {
   const theme = useTheme();
   const {title} = theme.colors;
+  const {navigate} = useNavigation();
   return (
     <Box
       flexDirection="row"
@@ -27,21 +33,44 @@ const HeadNav = ({}) => {
           <Image source={logo} style={{}} />
         </Clickable>
       </Box>
-      <Box flexDirection="row">
-        <Clickable paddingHorizontal="mx2">
-          <Toggle name="search1" color={title} size={18} />
-        </Clickable>
-        <Clickable paddingHorizontal="mx2">
-          <Bell name="bell" color={title} size={18} />
-        </Clickable>
+      {hasSkip && (
+        <Box
+          height={200}
+          width={200}
+          zIndex={-5}
+          borderRadius={120}
+          backgroundColor="border"
+          position={'absolute'}
+          right={-50}
+          top={-100}
+        />
+      )}
+      {leftIcons && (
+        <Box flexDirection="row">
+          <Clickable paddingHorizontal="mx2">
+            <Toggle name="search1" color={title} size={18} />
+          </Clickable>
+          <Clickable paddingHorizontal="mx2">
+            <Bell name="bell" color={title} size={18} />
+          </Clickable>
 
-        <Clickable paddingHorizontal="mx2">
-          <Toggle name="shoppingcart" color={title} size={18} />
-        </Clickable>
-        {/* <Clickable paddingHorizontal="mx2">
+          <Clickable paddingHorizontal="mx2">
+            <Toggle name="shoppingcart" color={title} size={18} />
+          </Clickable>
+          {/* <Clickable paddingHorizontal="mx2">
           <Toggle name="menuunfold" color={title} size={18} />
         </Clickable> */}
-      </Box>
+        </Box>
+      )}
+      {hasSkip && (
+        <Clickable
+          onPress={() => navigate('Dashboard')}
+          paddingHorizontal="mx2">
+          <Text variant={'medium'} textTransform={'uppercase'} fontSize={14}>
+            Skip
+          </Text>
+        </Clickable>
+      )}
     </Box>
   );
 };

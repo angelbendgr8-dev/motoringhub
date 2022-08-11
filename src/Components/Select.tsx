@@ -10,25 +10,35 @@ type Props = {
   data: Array<{}>;
   label: string;
   disabled?: boolean;
+  onSelect: (val: string) => void;
+  defaultValue: string;
 };
-const Select: React.FC<Props> = ({data, disabled = false, label}) => {
-  const [value, setValue] = useState('Bank Transfer');
+const Select: React.FC<Props> = ({
+  data,
+  disabled = false,
+  defaultValue,
+  label,
+  onSelect,
+}) => {
+  const [value, setValue] = useState(defaultValue);
 
   const theme = useTheme();
-  const {title, muted, background} = theme.colors;
+  const {title, muted, background, grey, border, content} = theme.colors;
   const renderItem = (item: any) => {
     return (
-      <View style={styles.item}>
-        <Text variant={'medium'}>{item.label}</Text>
+      <View style={[styles.item, {borderBottomColor: border}]}>
+        <Text variant={'regular'} color="content">
+          {item.label}
+        </Text>
       </View>
     );
   };
   return (
     <Box
-      marginVertical={'m'}
-      paddingVertical="s"
-      borderWidth={1}
-      borderColor="border"
+      // marginVertical={'my1'}
+      paddingVertical="mx1"
+      borderWidth={0.5}
+      borderColor="content"
       borderRadius={5}>
       <Box
         position="absolute"
@@ -41,13 +51,13 @@ const Select: React.FC<Props> = ({data, disabled = false, label}) => {
       </Box>
       <Dropdown
         style={[styles.dropdown, {backgroundColor: 'transparent'}]}
-        placeholderStyle={styles.placeholderStyle}
+        placeholderStyle={[styles.placeholderStyle, {color: content}]}
         selectedTextStyle={[
           styles.selectedTextStyle,
-          {color: disabled ? muted : 'white'},
+          {color: disabled ? muted : content},
         ]}
         containerStyle={[
-          {backgroundColor: background, borderWidth: 0, borderRadius: 10},
+          {backgroundColor: grey, borderWidth: 0, borderRadius: 5},
         ]}
         data={data}
         maxHeight={300}
@@ -55,10 +65,11 @@ const Select: React.FC<Props> = ({data, disabled = false, label}) => {
         disable={disabled}
         labelField="label"
         valueField="value"
-        activeColor={background}
+        activeColor={grey}
         value={value}
         onChange={item => {
           setValue(item.value);
+          onSelect(item.value);
         }}
         renderItem={renderItem}
       />
@@ -70,7 +81,7 @@ export default Select;
 
 const styles = StyleSheet.create({
   dropdown: {
-    height: heightPercentageToDP('6%'),
+    height: heightPercentageToDP('5.5%'),
     // borderColor: 'gray',
     // borderWidth: 0.5,
     borderRadius: 30,
@@ -101,6 +112,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-start',
-    borderWidth: 0,
+    borderBottomWidth: 1,
   },
 });

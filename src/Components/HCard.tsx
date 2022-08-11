@@ -9,8 +9,11 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import Text from './Text';
+import {useTheme} from '@shopify/restyle';
 
 const Card = () => {
+  const theme = useTheme();
+  const {content} = theme.colors;
   return (
     <Clickable flexDirection="row" marginVertical="my1" alignItems="center">
       <Box
@@ -25,12 +28,12 @@ const Card = () => {
           Blue Denim Jacket
         </Text>
         <Text variant="medium" fontSize={12}>
-          <Icon name="location" color={'content'} size={14} />
+          <Icon name="location" color={content} size={14} />
           Abule Egba
         </Text>
 
         <Text variant="bold" fontSize={12} color="content">
-          <Upload name="upload-cloud" color={'content'} size={14} />
+          <Upload name="upload-cloud" color={content} size={14} />
           Jun,24 2020
         </Text>
         <Text variant="regular" color="primary">

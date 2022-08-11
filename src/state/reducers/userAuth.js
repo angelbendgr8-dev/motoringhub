@@ -10,6 +10,10 @@ const slice = createSlice({
     guest: false,
     profilePics: null,
     push_token: null,
+    search: [],
+    like: [],
+    purchases: [],
+    services: [],
   },
   reducers: {
     setCredentials: (state, {payload: {user, token}}) => {

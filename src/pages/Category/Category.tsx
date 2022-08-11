@@ -3,27 +3,35 @@ import React, {useEffect} from 'react';
 import Text from '../../Components/Text';
 import Clickable from '../../Components/Clickable';
 import {car} from '../../assets';
+import Box from '../../Components/Box';
+import {assetUrl} from '../../helpers/constants';
 
 type Props = {
-  active: boolean;
   title: string;
   image: object;
   onPress: () => void;
 };
 export const Category: React.FC<Props> = ({active, title, image, onPress}) => {
   useEffect(() => {}, [title]);
-
+  // console.log(`${assetUrl()}/${image}`);
   return (
     <Clickable
       onPress={onPress}
       alignItems="center"
-      justifyContent="center"
-      marginHorizontal='mx3'
-      style={active ? styles.underline : styles.noUnderline}>
-      <Image source={image} style={{height: 45, width: 45}} />
-      <Text variant={'medium'} fontSize={12} color="title">
-        {title}
-      </Text>
+      justifyContent="space-around"
+      // width="100%"
+      margin="mx2"
+      padding="mx3"
+      borderRadius={15}
+      backgroundColor="grey"
+      elevation={5}>
+      <Image
+        source={{uri: `${assetUrl()}/${image}`}}
+        style={{height: 40, width: 40}}
+      />
+      {/* <Text variant={'medium'} textAlign='center' fontSize={12} color="title">
+          {title}
+        </Text> */}
     </Clickable>
   );
 };
@@ -47,17 +55,5 @@ const styles = StyleSheet.create({
   },
   nonActiveText: {
     color: '#707070',
-  },
-  underline: {
-    backgroundColor: '#707070',
-    padding: 5,
-    opacity: 0.87,
-    marginHorizontal: 10,
-    borderRadius: 35,
-  },
-  noUnderline: {
-    marginHorizontal: 10,
-    justifyContent: 'center',
-    padding: 5,
   },
 });

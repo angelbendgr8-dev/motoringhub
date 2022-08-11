@@ -24,7 +24,12 @@ import AppContextProvider from './src/state/AppContext';
 
 import {MenuProvider} from 'react-native-popup-menu';
 import {DrawerTab} from './src/Navigation/Drawer';
-
+import LocationContextProvider from './src/state/LocationContext';
+import {ToastProvider} from 'react-native-toast-notifications';
+import Icon from 'react-native-vector-icons/Feather';
+import Warn from 'react-native-vector-icons/Ionicons';
+import Error from 'react-native-vector-icons/MaterialIcons';
+import ProductUploadContextProvider from './src/state/CarInfoContext';
 let persistor = persistStore(store);
 
 const App = () => {
@@ -40,13 +45,28 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
-            <StatusBar
-              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            />
             <AppContextProvider>
-              <MenuProvider>
-                <StackNavigation />
-              </MenuProvider>
+              <ProductUploadContextProvider>
+                <LocationContextProvider>
+                  <ToastProvider
+                    placement="top"
+                    duration={5000}
+                    animationType="zoom-in"
+                    animationDuration={250}
+                    successColor="green"
+                    dangerColor="red"
+                    warningColor="orange"
+                    normalColor="gray"
+                    // icon={<Icon />}
+                    successIcon={<Icon name="check-circle" color="white" />}
+                    dangerIcon={<Error name="dangerous" color="white" />}
+                    warningIcon={<Warn name="warning-sharp" color="white" />}>
+                    <MenuProvider>
+                      <StackNavigation />
+                    </MenuProvider>
+                  </ToastProvider>
+                </LocationContextProvider>
+              </ProductUploadContextProvider>
             </AppContextProvider>
           </ThemeProvider>
         </NavigationContainer>

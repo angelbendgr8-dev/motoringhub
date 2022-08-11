@@ -8,7 +8,7 @@ import {
 import React from 'react';
 
 import {Theme} from '../theme';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {KeyboardTypeOptions, StyleSheet, TextInput, View} from 'react-native';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import Text from './Text';
 const Box = createBox();
@@ -19,67 +19,77 @@ type RestyleProps = SpacingProps<Theme> &
 
 type Props = RestyleProps & {
   value: string;
-  placeholder: string;
-  onChange: (e: Event) => void;
-  type: string;
+  onChange: (e: any) => void;
+  type?: string;
   secure?: boolean;
   label: string;
   disabled?: boolean;
   blurred?: () => void;
   rightBtn?: Function;
   leftIcon?: Function;
-  customStyles: {};
+  inputType?: KeyboardTypeOptions;
+  customStyles?: {};
+  multiline?: boolean;
+  lines?: number;
 };
 
 const Input = ({
   value,
-  placeholder,
   onChange,
-  type,
+  type = 'none',
   secure = false,
   disabled = true,
   blurred,
   rightBtn,
+  inputType = 'text',
   label,
-  customStyles,
+  multiline = false,
+  lines = 1,
+  customStyles = {},
 }: Props) => {
-  const [holder, setHolder] = React.useState(placeholder);
+  // const [holder, setHolder] = React.useState(placeholder);
   const [isFocus, setIsFocus] = React.useState(false);
   const theme = useTheme();
-  const {foreground} = theme.colors;
+  const {content, primary, title} = theme.colors;
 
   return (
     <Box
       backgroundColor={'background'}
       flexDirection={'row'}
-      borderRadius={10}
+      borderRadius={5}
       justifyContent={'space-between'}
       alignItems={'center'}
-      paddingHorizontal={'mx3'}
-      borderColor="border"
-      borderWidth={1}
-      height={heightPercentageToDP('7%')}
+      paddingHorizontal={'mx2'}
+      borderColor={isFocus ? 'title' : 'content'}
+      borderWidth={0.5}
+      height={
+        multiline
+          ? (heightPercentageToDP('6.5%') * lines) / 2
+          : heightPercentageToDP('6.5%')
+      }
       style={customStyles}>
-      <Box
-        position="absolute"
-        top={-10}
-        left={25}
-        zIndex={5}
-        paddingHorizontal={'mx3'}
-        backgroundColor="background">
-        <Text variant="regular">{label}</Text>
-      </Box>
+      {isFocus && (
+        <Box
+          position="absolute"
+          top={-10}
+          left={25}
+          zIndex={5}
+          paddingHorizontal={'mx3'}
+          backgroundColor="grey">
+          <Text variant="regular" color="title">
+            {label}
+          </Text>
+        </Box>
+      )}
       <TextInput
         value={value}
-        placeholder={holder}
-        placeholderTextColor={foreground}
+        placeholder={isFocus ? '' : label}
+        placeholderTextColor={content}
         onChangeText={onChange}
         onFocus={() => {
           setIsFocus(true);
-          setHolder('');
         }}
         onBlur={() => {
-          setHolder(placeholder);
           setIsFocus(false);
           // blurred()
         }}
@@ -88,7 +98,8 @@ const Input = ({
           styles.inputStyle,
           {
             flex: 2,
-            color: foreground,
+            color: content,
+            textAlignVertical: multiline ? 'top' : 'center',
           },
           // props.style,
         ]}
@@ -96,6 +107,9 @@ const Input = ({
         textContentType={type}
         secureTextEntry={secure}
         editable={disabled}
+        keyboardType={inputType}
+        multiline={multiline}
+        numberOfLines={lines}
         underlineColorAndroid="transparent"
       />
       {rightBtn && <View style={{}}>{rightBtn()}</View>}

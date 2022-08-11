@@ -15,74 +15,63 @@ import {
 import Button from '../../Components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Links from '../../Components/Links';
+import HeadNav from '../../Components/HeadNav';
+import Clickable from '../../Components/Clickable';
 
 const Box = createBox();
 const ForgotPassword = () => {
   const [secure, setSecure] = React.useState(true);
+  const [loading, setLoading] = useState(false);
 
   const {navigate} = useNavigation();
   const theme = useTheme();
-  const {background, success} = theme.colors;
+  const {primary, content} = theme.colors;
   const {my2, mx3, s} = theme.spacing;
-  return (
-    <Container style={{justifyContent: 'space-between'}}>
-      <Header text={'Sign In'} />
-      <Container
-        style={{
-          justifyContent: 'flex-start',
-          paddingHorizontal: mx3,
-          paddingVertical: my2,
-        }}>
-        <Box
-          marginHorizontal={'mx4'}
-          marginVertical={'my2'}
-          borderRadius={15}
-          alignItems={'center'}
-          alignSelf={'center'}
-          paddingVertical={'my2'}
-          paddingHorizontal={'mx3'}
-          backgroundColor={'secondary'}>
-          <Box
-            marginHorizontal={'s'}
-            marginVertical={'my2'}
-            maxWidth={widthPercentageToDP('55%')}>
-            <Text textAlign={'center'} variant={'medium'} color={'faint'}>
-              We will send a mail to the email address you registered to regain
-              your password
-            </Text>
-          </Box>
-          <Input
-            label={'Email'}
-            value={''}
-            type={'emailAddress'}
-            placeholder={'Email Address'}
-            onChange={input => {}}
-            leftIcon={() => (
-              <Icon
-                style={{marginRight: s}}
-                name={'mail'}
-                size={18}
-                color={success}
-              />
-            )}
-          />
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-          <Box flexDirection={'row'} marginHorizontal={'my3'}>
-            <Links variant={'medium'}>Forgot Password?</Links>
-          </Box>
-          <Button
-            label="Send"
-            onPress={() => navigate('Signup')}
-            backgroundColor={'success'}
-            width={widthPercentageToDP('80%')}
-            labelStyle={{color: 'white'}}
-            paddingVertical={'my2'}
-            marginVertical={'my3'}
-            borderRadius={30}
-            alignItems={'center'}
-          />
+  const submit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate('Dashboard');
+    }, 3000);
+  };
+  return (
+    <Container>
+      <HeadNav text={'Sign In'} leftIcons={false} hasSkip={true} />
+      <Box paddingHorizontal={'mx3'} flex={1} paddingTop={'my7'}>
+        <Box marginVertical={'my4'}>
+          {/* <Text variant={'medium'}>Hey,</Text> */}
+          <Text variant="medium">Forgot Password</Text>
         </Box>
-      </Container>
+        <Box marginVertical="my2">
+          <Input label="Email" type="email" />
+        </Box>
+
+        <Button
+          paddingVertical="mx3"
+          marginTop="my4"
+          paddingHorizontal="s"
+          borderRadius={5}
+          onPress={() => {}}
+          type="primary"
+          textType="uppercase"
+          textFont={14}
+          label="Sign in"
+        />
+
+        <Box flexDirection={'row'} alignItems="center" justifyContent="center">
+          <Text variant="medium" fontSize={15}>
+            Back To
+          </Text>
+          <Clickable onPress={() => navigate('Login')} marginRight="mx2">
+            <Text textDecorationLine="underline" variant="bold" fontSize={15}>
+              {'  Sign in'}
+            </Text>
+          </Clickable>
+        </Box>
+      </Box>
     </Container>
   );
 };

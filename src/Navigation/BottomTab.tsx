@@ -19,7 +19,7 @@ export function BottomTab() {
       tabBar={props => <BottomTabBar {...props} />}>
       <Tab.Screen name="Home" component={Dashboard} />
       <Tab.Screen name="Services" component={Category} />
-      <Tab.Screen name="Deals" component={Deals} />
+      <Tab.Screen name="SellCar" component={Deals} />
       <Tab.Screen name="Profile" component={Account} />
     </Tab.Navigator>
   );

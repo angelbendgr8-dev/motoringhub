@@ -88,7 +88,7 @@ export default function BottomTabBar({state, descriptors, navigation}) {
                   tintColor: isFocused ? primary : 'black',
                 }}
               />
-            ) : label === 'Deals' ? (
+            ) : label === 'SellCar' ? (
               <Swap
                 name={isFocused ? 'cart' : 'cart-outline'}
                 size={isFocused ? 24 : 20}
@@ -105,7 +105,7 @@ export default function BottomTabBar({state, descriptors, navigation}) {
               variant={'regular'}
               fontSize={12}
               color={isFocused ? 'primary' : 'title'}>
-              {label}
+              {label === 'SellCar' ? 'Sell Car' : label}
             </Text>
           </TouchableOpacity>
         );

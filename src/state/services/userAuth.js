@@ -18,14 +18,14 @@ export const UserAuthApi = createApi({
   endpoints: builder => ({
     login: builder.mutation({
       query: credentials => ({
-        url: 'user/login',
+        url: 'auth/login',
         method: 'POST',
         body: credentials,
       }),
     }),
     signup: builder.mutation({
       query: credentials => ({
-        url: 'user/register-free',
+        url: 'auth/register',
         method: 'POST',
         body: credentials,
       }),
@@ -65,9 +65,9 @@ export const UserAuthApi = createApi({
     }),
     updateProfilePics: builder.mutation({
       query: credentials => ({
-        url: `/user/profilePhoto?email=${credentials.email}`,
+        url: '/users/update/picture',
         method: 'POST',
-        body: credentials.formData,
+        body: credentials,
       }),
     }),
     forgotPassword: builder.mutation({
