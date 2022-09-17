@@ -4,17 +4,17 @@ import Config from 'react-native-config';
 import {ReqResponse} from '../Interfaces/error.interface';
 
 export const getUrl = () => {
-  return 'https://motoringapp.eu-1.sharedwithexpose.com/api';
+  return 'https://3a00-102-89-47-111.eu.ngrok.io/api';
 };
 export const assetUrl = () => {
-  return 'https://motoringapp.eu-1.sharedwithexpose.com/storage';
+  return 'https://3a00-102-89-47-111.eu.ngrok.io/storage';
 };
 
 export function currencyFormat(num) {
   return (
     '\u20A6' +
     Number(num)
-      .toFixed(0)
+      .toFixed(2)
       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   );
 }

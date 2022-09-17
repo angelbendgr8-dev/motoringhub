@@ -20,6 +20,7 @@ import CarModel from '../pages/Sell/CarModel';
 import CarDetails from '../pages/Sell/CarDetails';
 import Summary from '../pages/Sell/Summary';
 import UploadCar from '../pages/Sell/UploadCar';
+import CarInformation from '../pages/CarInformation';
 const Stack = createNativeStackNavigator<MainStack>();
 
 function StackNavigation() {
@@ -31,7 +32,7 @@ function StackNavigation() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={'Login'}>
+      initialRouteName={'Dashboard'}>
       <Stack.Screen name="Dashboard" component={BottomTab} />
       <Stack.Screen name="ServiceDetails" component={ServiceDetails} />
       <Stack.Screen name="RequestService" component={RequestService} />
@@ -48,6 +49,8 @@ function StackNavigation() {
       <Stack.Screen name="CarDetails" component={CarDetails} />
       <Stack.Screen name="Summary" component={Summary} />
       <Stack.Screen name="UploadCar" component={UploadCar} />
+      <Stack.Screen name="ProductDetail" component={CarInformation} />
+      <Stack.Screen name="SpareDetail" component={UploadCar} />
     </Stack.Navigator>
   );
 }

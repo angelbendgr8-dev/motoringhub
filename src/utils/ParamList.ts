@@ -21,6 +21,8 @@ export type MainStack = {
   CarDetails: undefined;
   Summary: undefined;
   UploadCar: undefined;
+  ProductDetail: undefined;
+  SpareDetail: undefined;
 };
 
 export type BottomTabList = {

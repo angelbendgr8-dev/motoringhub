@@ -7,6 +7,7 @@ const slice = createSlice({
   initialState: {
     cars: [],
     parts: [],
+    carts: [],
   },
   reducers: {
     setCars: (state, {payload: {cars}}) => {
@@ -17,12 +18,16 @@ const slice = createSlice({
       // console.log(categories);
       state.parts = parts;
     },
+    setCarts: (state, {payload: {carts}}) => {
+      state.carts = carts;
+    },
   },
 });
 
-export const {setCars, setParts} = slice.actions;
+export const {setCars, setParts,setCarts} = slice.actions;
 
 export default slice.reducer;
 
 export const selectCars = state => state.productReducer.cars;
 export const selectParts = state => state.productReducer.parts;
+export const selectCarts = state => state.productReducer.carts;
