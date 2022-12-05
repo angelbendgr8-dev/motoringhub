@@ -30,6 +30,7 @@ type Props = RestyleProps & {
   inputType?: KeyboardTypeOptions;
   customStyles?: {};
   multiline?: boolean;
+  isLabel?: boolean;
   lines?: number;
 };
 
@@ -41,8 +42,10 @@ const Input = ({
   disabled = true,
   blurred,
   rightBtn,
+  leftIcon,
   inputType = 'text',
   label,
+  isLabel = true,
   multiline = false,
   lines = 1,
   customStyles = {},
@@ -68,7 +71,7 @@ const Input = ({
           : heightPercentageToDP('6.5%')
       }
       style={customStyles}>
-      {isFocus && (
+      {isFocus && isLabel && (
         <Box
           position="absolute"
           top={-10}
@@ -81,6 +84,7 @@ const Input = ({
           </Text>
         </Box>
       )}
+      {leftIcon && <Box style={{}}>{leftIcon()}</Box>}
       <TextInput
         value={value}
         placeholder={isFocus ? '' : label}

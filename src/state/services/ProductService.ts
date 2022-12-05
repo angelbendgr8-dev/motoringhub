@@ -27,9 +27,28 @@ export const ProductApi = createApi({
         url: 'products/parts',
       }),
     }),
+    orderProduct: builder.mutation({
+      query: credentials => ({
+        url: 'order/parts',
+        method: 'post',
+        body: credentials,
+      }),
+    }),
+    inspectCar: builder.mutation({
+      query: credentials => ({
+        url: 'book/inspection',
+        method: 'post',
+        body: credentials,
+      }),
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useGetProductsQuery, useGetSparePartsQuery} = ProductApi;
+export const {
+  useGetProductsQuery,
+  useGetSparePartsQuery,
+  useOrderProductMutation,
+  useInspectCarMutation,
+} = ProductApi;

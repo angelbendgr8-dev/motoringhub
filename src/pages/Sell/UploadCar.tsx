@@ -54,7 +54,7 @@ const UploadCar = () => {
     price,
     setPrice,
     images,
-    setImagess,
+    setImages,
   } = useContext(ProductUploadContext);
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('234');

@@ -47,16 +47,16 @@ const HeadNav: React.FC<Props> = ({leftIcons = true, hasSkip = false}) => {
       )}
       {leftIcons && (
         <Box flexDirection="row">
-          <Clickable paddingHorizontal="mx2">
+          <Clickable onPress={() => navigate('Search')} paddingHorizontal="mx2">
             <Toggle name="search1" color={title} size={18} />
           </Clickable>
           <Clickable paddingHorizontal="mx2">
             <Bell name="bell" color={title} size={18} />
           </Clickable>
 
-          <Clickable paddingHorizontal="mx2">
+          {/* <Clickable paddingHorizontal="mx2">
             <Toggle name="shoppingcart" color={title} size={18} />
-          </Clickable>
+          </Clickable> */}
           {/* <Clickable paddingHorizontal="mx2">
           <Toggle name="menuunfold" color={title} size={18} />
         </Clickable> */}

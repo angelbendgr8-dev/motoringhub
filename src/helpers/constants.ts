@@ -4,10 +4,10 @@ import Config from 'react-native-config';
 import {ReqResponse} from '../Interfaces/error.interface';
 
 export const getUrl = () => {
-  return 'https://3a00-102-89-47-111.eu.ngrok.io/api';
+  return 'https://indexcapitalfx.com/motoring/api';
 };
 export const assetUrl = () => {
-  return 'https://3a00-102-89-47-111.eu.ngrok.io/storage';
+  return 'https://indexcapitalfx.com/motoring/public/storage';
 };
 
 export function currencyFormat(num) {

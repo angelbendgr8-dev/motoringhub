@@ -14,12 +14,14 @@ const palette = {
   lightbg: '#E5E5E5',
   content: '#777777',
   transparent: 'rgba(1,1,1,0.1)',
+  info: '#C8A400',
   blackbg: '#2B2B2B',
   lightgray: '#EDEFF4',
   darkgray: '#232323',
   darkcontent: '#BABABA',
   darktitle: '#EFEFEF',
   darkoutline: '#BABABA',
+  success: '#1BC457',
 };
 
 export const theme = createTheme({
@@ -34,6 +36,8 @@ export const theme = createTheme({
     grey: palette.lightgray,
     white: palette.white,
     outlineSecondary: palette.content,
+    success: palette.success,
+    info: palette.info,
   },
 
   spacing: {

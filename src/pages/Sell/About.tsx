@@ -318,7 +318,7 @@ const About = () => {
                       onChange(input);
                       setPrice(input);
                     }}
-                    inputType='phone-pad'
+                    inputType="phone-pad"
                     label="Product Price"
                     customStyles={{}}
                   />
@@ -346,7 +346,7 @@ const About = () => {
             childColor="white"
             onPress={handleSubmit(onSubmit)}
             type="primary"
-            label="Book Service"
+            label={type === 'parts' ? 'Upload Product' : 'Book Service'}
           />
         </Box>
       </Box>

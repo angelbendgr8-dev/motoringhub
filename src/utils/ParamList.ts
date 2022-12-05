@@ -16,13 +16,20 @@ export type MainStack = {
   EditProfile: undefined;
   ChangePassword: undefined;
   AboutCar: undefined;
+  DeliveryLocation: undefined;
   CarMaker: undefined;
   CarModel: undefined;
   CarDetails: undefined;
   Summary: undefined;
   UploadCar: undefined;
   ProductDetail: undefined;
+  PartDetails: undefined;
   SpareDetail: undefined;
+  OrderSuccess: undefined;
+  Cars: undefined;
+  Parts: undefined;
+  Search: undefined;
+  Result: {searchTerm: string; type: string};
 };
 
 export type BottomTabList = {

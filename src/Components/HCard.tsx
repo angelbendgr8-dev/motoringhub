@@ -21,7 +21,10 @@ const HCard: React.FC<Params> = ({item}) => {
   const {content} = theme.colors;
   const {navigate} = useNavigation();
   const {mx3} = theme.spacing;
-  const gotoDetails = () => {};
+  console.log(`${assetUrl()}/${item.images[0]}`);
+  const gotoDetails = () => {
+    navigate('PartDetails', {item});
+  };
   return (
     <Clickable
       onPress={gotoDetails}

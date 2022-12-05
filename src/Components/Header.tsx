@@ -16,12 +16,14 @@ type Props = {
   text?: string;
   leftIcon?: boolean;
   rightIcon?: boolean;
+  closeIcon?: React.ReactFragment;
   bgColor?: string;
 };
 const Header: React.FC<Props> = ({
   leftIcon = false,
   text = '',
   rightIcon = false,
+  closeIcon,
   bgColor = 'primary',
 }) => {
   const {goBack} = useNavigation();
@@ -35,23 +37,25 @@ const Header: React.FC<Props> = ({
       justifyContent={'space-between'}
       paddingHorizontal={'mx2'}
       paddingVertical={'my2'}>
-      {leftIcon && (
-        <Clickable
-          flexDirection="row"
-          alignItems="center"
-          onPress={goBack}
-          style={{padding: 2}}>
-          <Icon name="arrowleft" color={background} size={18} />
-        </Clickable>
-      )}
-      <Box marginLeft={'s'} alignItems={'center'}>
-        <Text
-          variant={'medium'}
-          marginRight={'s'}
-          color="background"
-          fontSize={RFValue(18)}>
-          {text}
-        </Text>
+      <Box flexDirection={'row'} alignItems={'center'}>
+        {leftIcon && (
+          <Clickable
+            flexDirection="row"
+            alignItems="center"
+            onPress={goBack}
+            style={{padding: 2}}>
+            <Icon name="arrowleft" color={background} size={18} />
+          </Clickable>
+        )}
+        <Box marginLeft={'s'} alignItems={'center'}>
+          <Text
+            variant={'medium'}
+            marginRight={'s'}
+            color="background"
+            fontSize={RFValue(18)}>
+            {text}
+          </Text>
+        </Box>
       </Box>
 
       {rightIcon && (
@@ -71,6 +75,7 @@ const Header: React.FC<Props> = ({
         </Clickable> */}
         </Box>
       )}
+      {/* {closeIcon()} */}
     </Box>
   );
 };

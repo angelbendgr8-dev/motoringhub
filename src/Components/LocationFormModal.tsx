@@ -42,7 +42,7 @@ type Props = {
 };
 const LocationFormModal: React.FC<Props> = ({isVisible, closeAction}) => {
   const theme = useTheme();
-  const {content, background} = theme.colors;
+  const {content, primary} = theme.colors;
   const {data, refetch} = useGetLocationsQuery();
   const {
     setArea,
@@ -73,7 +73,7 @@ const LocationFormModal: React.FC<Props> = ({isVisible, closeAction}) => {
 
   useEffect(() => {
     if (data) {
-    //   console.log(data);
+      //   console.log(data);
       setLocation(data.data);
     }
     // refetch();
@@ -94,7 +94,7 @@ const LocationFormModal: React.FC<Props> = ({isVisible, closeAction}) => {
 
   return (
     <Box>
-      <StatusBar backgroundColor={background} />
+      <StatusBar backgroundColor={primary} />
       <Modal isVisible={isVisible} style={{padding: 0, margin: 0}}>
         <Box flex={1} backgroundColor="background">
           <Box
@@ -102,6 +102,7 @@ const LocationFormModal: React.FC<Props> = ({isVisible, closeAction}) => {
             borderBottomColor={'grey'}
             borderBottomWidth={1}
             shadowColor="grey"
+            backgroundColor="primary"
             paddingHorizontal="mx3"
             shadowOffset={{height: 10, width: 10}}
             paddingVertical="my2"
@@ -113,7 +114,7 @@ const LocationFormModal: React.FC<Props> = ({isVisible, closeAction}) => {
             <Text
               variant="medium"
               fontSize={14}
-              color={'content'}
+              color={'white'}
               marginLeft="mx2">
               Motoringhub centers
             </Text>

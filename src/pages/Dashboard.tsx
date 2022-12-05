@@ -19,6 +19,7 @@ import Card from '../Components/Card';
 import _ from 'lodash';
 import Clickable from '../Components/Clickable';
 import {useUpdateEffect} from 'usehooks-ts';
+import {useNavigation} from '@react-navigation/native';
 
 // const data = [{label: 'test', value: 'test'}];
 const ListHeader = () => {
@@ -42,8 +43,10 @@ const Dashboard = () => {
   const {data, isLoading: carsLoading} = useGetProductsQuery();
   const dispatch = useDispatch();
   const {cars} = useProduct();
+  const {navigate} = useNavigation();
   useEffect(() => {
     if (data) {
+      // console.log(data);
       dispatch(setCars({cars: data.data}));
     }
   }, [data, dispatch]);
@@ -57,7 +60,7 @@ const Dashboard = () => {
         <Box />
 
         <FlatList
-          data={cars}
+          data={cars.filter((car, index) => index <= 3)}
           keyExtractor={(item, index) => item + index}
           renderItem={({item}) => <Card item={item} />}
           ListHeaderComponent={() => (
@@ -68,12 +71,16 @@ const Dashboard = () => {
                 alignItems="center"
                 justifyContent="space-between">
                 <Box flexDirection="row">
-                  <Text variant="bold" textTransform="capitalize" fontSize={16}>
+                  <Text
+                    variant="bold"
+                    textT
+                    ransform="capitalize"
+                    fontSize={16}>
                     {'Cars'}
                   </Text>
                   {/* {icon()} */}
                 </Box>
-                <Clickable>
+                <Clickable onPress={() => navigate('Cars')}>
                   <Text variant="regular" color="primary" fontSize={14}>
                     See all
                   </Text>

@@ -35,7 +35,7 @@ const RequestService = () => {
   const [motorLocation, setMotorLocation] = useState(false);
   const [formattedValue, setFormattedValue] = useState('');
   const {location, area, address, state, setLocation, type, date} =
-  useContext(LocationContext);
+    useContext(LocationContext);
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('234');
   const phoneInput = useRef<PhoneInput>(null);

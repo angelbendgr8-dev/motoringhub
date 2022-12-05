@@ -42,6 +42,7 @@ const condition = [
   {label: 'local', value: 'local'},
   {label: 'foreign', value: 'foreign'},
 ];
+ 
 
 const CarDetails = () => {
   const theme = useTheme();
@@ -85,6 +86,7 @@ const CarDetails = () => {
       goBack();
     }
   };
+  
 
   return (
     <Container backgroundColor="background">

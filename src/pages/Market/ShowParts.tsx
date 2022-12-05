@@ -13,10 +13,11 @@ import {setParts} from '../../state/reducers/productReducer';
 import {useProduct} from '../../state/hooks/product';
 import HCard from '../../Components/HCard';
 import Hr from '../../Components/Hr';
+import { useNavigation } from '@react-navigation/native';
 
 const ShowParts: React.FC<{}> = () => {
   const theme = useTheme();
-
+  const {navigate} = useNavigation();
   const {data, isLoading} = useGetSparePartsQuery();
   const dispatch = useDispatch();
   const {parts} = useProduct();
@@ -46,7 +47,7 @@ const ShowParts: React.FC<{}> = () => {
           </Text>
           {/* {icon()} */}
         </Box>
-        <Clickable>
+        <Clickable onPress={()=>navigate('Parts')}>
           <Text variant="regular" color="primary" fontSize={14}>
             See all
           </Text>

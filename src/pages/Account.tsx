@@ -20,6 +20,8 @@ import Button from '../Components/Button';
 import {useNavigation} from '@react-navigation/native';
 
 import {useAuth} from '../state/hooks/userAuth';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../state/reducers/userAuth';
 
 type ItemProps = {
   icon: Element;
@@ -56,6 +58,7 @@ const Account = () => {
   const {content} = theme.colors;
   const {navigate} = useNavigation();
   const {user} = useAuth();
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -130,6 +133,7 @@ const Account = () => {
           backgroundColor="grey"
           marginTop="my2"
           paddingVertical="mx3"
+          onPress={()=> dispatch(signOut())}
           borderRadius={5}
           label="Log out"
           type="secondary"

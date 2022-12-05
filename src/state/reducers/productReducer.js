@@ -21,6 +21,7 @@ const slice = createSlice({
     setCarts: (state, {payload: {carts}}) => {
       state.carts = carts;
     },
+
   },
 });
 

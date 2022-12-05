@@ -2,6 +2,8 @@ import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {
   selectCurrentUser,
+  selectDefaultLocation,
+  selectLocation,
   selectPics,
   selectPushToken,
   selectToken,
@@ -12,9 +14,11 @@ export const useAuth = () => {
   const token = useSelector(selectToken);
   const pics = useSelector(selectPics);
   const push_token = useSelector(selectPushToken);
+  const locations = useSelector(selectLocation);
+  const dlocation = useSelector(selectDefaultLocation);
 
   return useMemo(
-    () => ({user, token, pics, push_token}),
-    [user, token, pics, push_token],
+    () => ({user, token, pics, push_token, locations, dlocation}),
+    [user, token, pics, push_token, locations, dlocation],
   );
 };
