@@ -38,6 +38,7 @@ const ListHeader = () => {
         <Banner
           header={'Sell/Buy a Car'}
           content={'on our automobile marketplace'}
+          ctaPressed={() => navigate('MarketPlace')}
         />
       </ScrollView>
       <CategoryList />

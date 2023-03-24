@@ -30,6 +30,7 @@ import Parts from '../pages/AllParts';
 import Search from '../pages/Search';
 import Result from '../pages/Result';
 import PartsResult from '../pages/PartsResult';
+import { MarketTabs } from '../pages/MarketPlace/MarketTabs';
 const Stack = createNativeStackNavigator<MainStack>();
 
 function StackNavigation() {
@@ -70,6 +71,7 @@ function StackNavigation() {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Result" component={Result} />
       <Stack.Screen name="PartsResult" component={PartsResult} />
+      <Stack.Screen name="MarketPlace" component={MarketTabs} />
 
       <Stack.Screen name="SpareDetail" component={UploadCar} />
     </Stack.Navigator>

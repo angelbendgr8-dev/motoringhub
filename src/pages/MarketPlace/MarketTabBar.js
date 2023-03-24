@@ -3,7 +3,7 @@ import {Animated, View, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 import {TextCustom} from '../../Text';
 
-export function MenNewsTabBar({state, descriptors, navigation, position}) {
+export function MarketTabBar({state, descriptors, navigation, position}) {
   return (
     <View
       style={{
