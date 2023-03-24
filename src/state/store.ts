@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {combineReducers} from 'redux';
+import {Action, combineReducers} from 'redux';
 // import { PersistGate } from 'redux-persist/integration/react'
 import {UserAuthApi} from './services/userAuth';
 import {ContentApi} from './services/ContentService';
@@ -12,6 +12,7 @@ import productReducer from './reducers/productReducer';
 import {RequestApi} from './services/RequestService';
 import {SettingApi} from './services/SettingsService';
 import {ProductApi} from './services/ProductService';
+import {setupListeners} from '@reduxjs/toolkit/dist/query';
 
 const persistConfig = {
   key: 'root',
@@ -32,7 +33,7 @@ const reducers = combineReducers({
   [SettingApi.reducerPath]: SettingApi.reducer,
 });
 
-const rootReducer = (state, action) => {
+const rootReducer = (state: any, action: Action) => {
   if (action.type === 'userauth/signOut') {
     // this applies to all keys defined in persistConfig(s)
     // store.removeItem('persist:root');
@@ -58,3 +59,7 @@ export const store = configureStore({
       ProductApi.middleware,
     ]),
 });
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+setupListeners(store.dispatch);

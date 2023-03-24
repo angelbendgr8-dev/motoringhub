@@ -31,7 +31,6 @@ import {useTheme} from '@shopify/restyle';
 import {assetUrl, performAsyncCalls} from '../helpers/constants';
 import {useUpdateProfilePicsMutation} from '../state/services/SettingsService';
 
-
 const ProfilePhoto = ({profilePics}) => {
   const [updateProfilePics, {isLoading}] = useUpdateProfilePicsMutation();
   const {user} = useAuth();
@@ -43,7 +42,7 @@ const ProfilePhoto = ({profilePics}) => {
   const [fileContent, setFileContent] = useState(null);
   const [fileUri, setFileUri] = useState(null);
   const dispatch = useDispatch();
-
+  console.log(user.profile_pics);
   const uploadFromCamera = () => {
     const options = {
       quality: 0.1,
@@ -118,7 +117,7 @@ const ProfilePhoto = ({profilePics}) => {
       console.log(response.data);
       const {data} = response;
       if (!data?.success) {
-        console.log('here');
+        console.log(data);
         toast.show(data?.message, {
           type: 'danger',
           placement: 'top',
@@ -154,6 +153,7 @@ const ProfilePhoto = ({profilePics}) => {
 
   const renderFileUri = () => {
     if (user?.profile_pics) {
+      console.log(`${assetUrl()}/${user.profile_pics}`, 'here');
       return (
         <Image
           source={{uri: `${assetUrl()}/${user.profile_pics}`}}
@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
     height: 104,
     width: 104,
     borderRadius: 60,
+    // backgroundColor: 'red',
   },
   camera: {
     position: 'absolute',

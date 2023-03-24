@@ -9,6 +9,7 @@ const slice = createSlice({
     services: [],
     locations: [],
     models: [],
+    allmodels: [],
   },
   reducers: {
     setCategories: (state, {payload: {categories}}) => {
@@ -19,12 +20,17 @@ const slice = createSlice({
       // console.log(categories);
       state.models = models;
     },
+    setAllModels: (state, {payload: {models}}) => {
+      // console.log(categories);
+      state.allmodels = models;
+    },
   },
 });
 
-export const {setCategories,setModels} = slice.actions;
+export const {setCategories, setModels, setAllModels} = slice.actions;
 
 export default slice.reducer;
 
 export const selectCategories = state => state.contentReducer.categories;
 export const selectModels = state => state.contentReducer.models;
+export const selectAllModels = state => state.contentReducer.allmodels;

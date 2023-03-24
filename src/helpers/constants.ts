@@ -4,10 +4,10 @@ import Config from 'react-native-config';
 import {ReqResponse} from '../Interfaces/error.interface';
 
 export const getUrl = () => {
-  return 'https://indexcapitalfx.com/motoring/api';
+  return 'https://motoringapp.vantagesignals.com/api';
 };
 export const assetUrl = () => {
-  return 'https://indexcapitalfx.com/motoring/public/storage';
+  return 'https://motoringapp.vantagesignals.com/public/storage';
 };
 
 export function currencyFormat(num) {

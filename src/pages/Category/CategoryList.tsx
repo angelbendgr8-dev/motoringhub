@@ -1,12 +1,14 @@
-import {ScrollView, StyleSheet} from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Category} from './Category';
-import {AppContext} from '../../state/AppContext';
+
 import Box from '../../Components/Box';
 import _ from 'lodash';
-import {useGetCategoriesQuery} from '../../state/services/ContentService';
+import {
+  useGetAllBrandsMutation,
+  useGetCategoriesQuery,
+} from '../../state/services/ContentService';
 import {useDispatch} from 'react-redux';
-import {setCategories} from '../../state/reducers/contentReducer';
+import {setAllModels, setCategories} from '../../state/reducers/contentReducer';
 import {useContent} from '../../state/hooks/content';
 
 // const categories = [
@@ -23,10 +25,14 @@ import {useContent} from '../../state/hooks/content';
 
 const CategoryList = ({}) => {
   const {data, error, isLoading, refetch} = useGetCategoriesQuery();
-  // const [categories, setCategories] = useState([]);
+  const [getAllBrands, {data: brands}] = useGetAllBrandsMutation();
   const dispatch = useDispatch();
   const {categories} = useContent();
   //   const {navigate} = useNavigation();
+  useEffect(() => {
+    getAllBrands();
+  }, [getAllBrands]);
+
   useEffect(() => {
     if (data) {
       // console.log(data.data);
@@ -40,6 +46,13 @@ const CategoryList = ({}) => {
     }
     // refetch();
   }, [data, error, isLoading, refetch, dispatch]);
+
+  useEffect(() => {
+    if (brands) {
+      dispatch(setAllModels({models: brands.data}));
+    }
+  }, [brands, dispatch]);
+
   useEffect(() => {}, [categories]);
 
   return (
@@ -54,8 +67,9 @@ const CategoryList = ({}) => {
             <Category
               key={index}
               onPress={() => {}}
+              category={cat}
               image={cat.picture}
-              title={cat.title}
+              title={cat.name}
             />
           ))}
         </>
@@ -65,16 +79,3 @@ const CategoryList = ({}) => {
 };
 
 export default CategoryList;
-
-const styles = StyleSheet.create({
-  container: {
-    // height: 35,
-    marginBottom: 4,
-    // flexDirection: 'row',
-    // marginLeft: 10,
-    paddingVertical: 5,
-    borderColor: 'rgba(112,112,112,0.5)',
-    // borderTopWidth: 0.3,
-    // borderBottomWidth: 0.3,
-  },
-});

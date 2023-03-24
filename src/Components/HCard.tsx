@@ -14,7 +14,7 @@ import {assetUrl, currencyFormat} from '../helpers/constants';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
 type Params = {
-  item: {};
+  item: any;
 };
 const HCard: React.FC<Params> = ({item}) => {
   const theme = useTheme();
@@ -32,12 +32,13 @@ const HCard: React.FC<Params> = ({item}) => {
       justifyContent="center"
       marginVertical="my1">
       <Image
-        source={{uri: `${assetUrl()}/${item.images[0]}`}}
+        source={{uri: `${assetUrl()}/${item?.images[0]}`}}
         style={{
           width: widthPercentageToDP('43.5%'),
           height: heightPercentageToDP('25%'),
           borderRadius: 10,
           marginRight: mx3,
+          resizeMode: 'center',
         }}
       />
       <Box alignSelf="flex-start">

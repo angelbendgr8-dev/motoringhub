@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Container from '../Components/Container';
 import Header from '../Components/Header';
@@ -8,9 +8,13 @@ import {useGetServicesQuery} from '../state/services/ContentService';
 import _ from 'lodash';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {Loader} from '../Components/Loader';
+import AnimatedLottieView from 'lottie-react-native';
 
 const Category = () => {
-  const {data, error, refetch} = useGetServicesQuery({pollingInterval: 500});
+  const {data, error, refetch, isLoading} = useGetServicesQuery({
+    pollingInterval: 500,
+  });
   const [services, setServices] = useState([]);
   const {navigate} = useNavigation();
   useEffect(() => {
@@ -23,11 +27,23 @@ const Category = () => {
   return (
     <Container>
       <Header leftIcon={true} text={'Services'} />
+      {isLoading && (
+        <Box flex={1} justifyContent="center" alignItems="center">
+          <Box >
+            <AnimatedLottieView
+              source={require('../assets/login.json')}
+              autoPlay
+              loop
+              style={styles.lottie}
+            />
+          </Box>
+        </Box>
+      )}
       <Box paddingHorizontal="mx3" marginTop="m">
-        <ScrollView
-          style={{marginBottom: heightPercentageToDP('8%')}}
-          showsVerticalScrollIndicator={false}>
-          {!_.isEmpty(services) && (
+        {!_.isEmpty(services) ? (
+          <ScrollView
+            style={{marginBottom: heightPercentageToDP('8%')}}
+            showsVerticalScrollIndicator={false}>
             <View>
               {[...services].map((service, index) => (
                 <Services
@@ -37,11 +53,20 @@ const Category = () => {
                 />
               ))}
             </View>
-          )}
-        </ScrollView>
+          </ScrollView>
+        ) : (
+          <Box></Box>
+        )}
       </Box>
     </Container>
   );
 };
 
 export default Category;
+
+const styles = StyleSheet.create({
+  lottie: {
+    width: 150,
+    height: 150,
+  },
+});

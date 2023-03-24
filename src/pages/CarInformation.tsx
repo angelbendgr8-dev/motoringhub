@@ -1,4 +1,12 @@
-import {View, Image, Animated, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Image,
+  Animated,
+  ScrollView,
+  StyleSheet,
+  FlatList,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import Container from '../Components/Container';
 import HeadNav from '../Components/HeadNav';
@@ -24,8 +32,9 @@ import Button from '../Components/Button';
 import LocationFormModal from '../Components/LocationFormModal';
 import {useAuth} from '../state/hooks/userAuth';
 import {useInspectCarMutation} from '../state/services/ProductService';
-import { Loader } from '../Components/Loader';
-import { InspectSuccess } from '../Components/InspectSuccess';
+import {Loader} from '../Components/Loader';
+import {InspectSuccess} from '../Components/InspectSuccess';
+import Caret from 'react-native-vector-icons/AntDesign';
 const Max_Header_Height = 200;
 const Min_Header_Height = 0;
 const Scroll_Distance = Max_Header_Height - Min_Header_Height;
@@ -81,17 +90,87 @@ const DescriptionItem: React.FC<DespProps> = ({title, value, index}) => {
     </Box>
   );
 };
-const FeaturesItem: React.FC<FeatureProps> = ({icon, name}) => {
+const FeaturesItem: React.FC<any> = ({item}) => {
+  console.log(item);
   return (
     <Box
       alignItems="center"
       paddingVertical="my2"
       paddingHorizontal="my3"
       justifyContent="space-between">
-      <FeatureIcon name={icon} size={22} />
+      <Image
+        style={{height: 20, width: 20}}
+        source={{uri: `${assetUrl()}/${item.icon}`}}
+      />
       <Text variant="regular" fontStyle="italic" fontSize={14} color="title">
-        {name}
+        {item.name}
       </Text>
+    </Box>
+  );
+};
+const InspectionItem = ({item, name}: {item: any; name: string}) => {
+  const keys = Object.keys(item);
+  const [visible, setVisible] = useState(false);
+  const values = Object.values(item);
+  const failed = values.filter(temp => temp === 'Failed').length;
+  return (
+    <Box
+      alignItems="flex-start"
+      width={widthPercentageToDP('100%')}
+      justifyContent="space-between">
+      <TouchableWithoutFeedback onPress={() => setVisible(!visible)}>
+        <Box
+          width="100%"
+          flexDirection="row"
+          paddingVertical="my2"
+          borderBottomColor="border"
+          justifyContent="space-between"
+          paddingHorizontal="m"
+          borderBottomWidth={0.6}
+          backgroundColor="white">
+          <Text
+            variant="regular"
+            fontStyle="italic"
+            fontSize={14}
+            color="title">
+            {name}
+          </Text>
+          <Box flexDirection="row">
+            <Box>
+              <Text variant="regular">{failed}</Text>
+            </Box>
+            <Caret name={visible ? 'caretup' : 'caretdown'} size={15} />
+          </Box>
+        </Box>
+      </TouchableWithoutFeedback>
+      {visible && (
+        <Box
+          backgroundColor="background"
+          width="100%"
+          marginVertical="my2"
+          paddingHorizontal="m">
+          {keys.map((data, index) => (
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              paddingVertical="m"
+              justifyContent="space-between">
+              <Box width="60%">
+                <Text color="content" variant="regular">
+                  {data}
+                </Text>
+              </Box>
+              <Box alignItems="flex-end" width="30%">
+                <Text
+                  color={values[index] === 'Passed' ? 'success' : 'danger'}
+                  variant="regular">
+                  {values[index]}
+                </Text>
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
@@ -108,6 +187,7 @@ const ImageCard = ({image}) => {
           height: heightPercentageToDP('45%'),
           // borderRadius: 5,
           marginRight: mx3,
+          resizeMode: 'contain',
         }}
         source={{uri: `${assetUrl()}/${image}`}}
       />
@@ -124,14 +204,14 @@ const CarInformation = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const {mx2} = theme.spacing;
-
+  console.log(item);
   const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const bookInspection = async () => {
     const formData = {
       user_id: user.id,
       car_id: item.id,
     };
-    console.log(formData);
+
     const response = await performAsyncCalls(formData, inspectCar);
     setSubmitted(true);
   };
@@ -210,7 +290,7 @@ const CarInformation = () => {
         </Box>
         <Box paddingVertical="my2">
           <Box flexDirection="row" paddingHorizontal="mx2">
-            <Text variant={'bold'} fontSize={17} color="title">
+            <Text variant={'medium'} fontSize={17} color="title">
               Description
             </Text>
           </Box>
@@ -231,7 +311,7 @@ const CarInformation = () => {
         </Box>
         <Box paddingVertical="my2">
           <Box flexDirection="row" paddingHorizontal="mx2">
-            <Text variant={'bold'} fontSize={17} color="title">
+            <Text variant={'medium'} fontSize={17} color="title">
               Key Features
             </Text>
           </Box>
@@ -241,14 +321,81 @@ const CarInformation = () => {
             flexWrap="wrap"
             alignItems="flex-start"
             maxWidth={widthPercentageToDP('95%')}
-            justifyContent="center">
-            <FeaturesItem icon={'setting'} name={'Launch Gear'} />
+            justifyContent="space-around">
+            {_.map(item.features, feature => (
+              <FeaturesItem item={feature} />
+            ))}
+
+            {/* <FeaturesItem icon={'setting'} name={'Launch Gear'} />
             <FeaturesItem icon={'enviroment'} name={'Central Locking'} />
             <FeaturesItem icon={'disconnect'} name={'Sunroof'} />
             <FeaturesItem icon={'shake'} name={'Keyless Entry'} />
             <FeaturesItem icon={'codepen-circle'} name={'Air Bag'} />
             <FeaturesItem icon={'setting'} name={'Remote Entry'} />
+            <FeaturesItem icon={'setting'} name={'Remote Entry'} /> */}
           </Box>
+        </Box>
+        <Box paddingVertical="my2">
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            paddingHorizontal="mx2">
+            <Text variant={'medium'} fontSize={17} color="title">
+              Inspection Report
+            </Text>
+            <Text variant={'medium'} fontSize={17} color="title">
+              2.4
+            </Text>
+          </Box>
+          {item.inspection ? (
+            <Box
+              // flexDirection="row"
+              // paddingHorizontal="mx2"
+              flexWrap="wrap"
+              alignItems="flex-start"
+              // maxWidth={widthPercentageToDP('95%')}
+              justifyContent="center">
+              <InspectionItem item={item.inspection.engines} name={'Engines'} />
+              <InspectionItem
+                item={item.inspection.electricals}
+                name={'Electricals'}
+              />
+              <InspectionItem
+                item={item.inspection.transmission_and_clutch}
+                name={'Transmission & clutch'}
+              />
+              <InspectionItem
+                item={item.inspection.suspension_and_steering}
+                name={'Suspension & steering'}
+              />
+              <InspectionItem
+                item={item.inspection.test_drive}
+                name={'Test drive'}
+              />
+              <InspectionItem
+                item={item.inspection.interior}
+                name={'Interior'}
+              />
+              <InspectionItem
+                item={item.inspection.exterior}
+                name={'Exterior'}
+              />
+              <InspectionItem
+                item={item.inspection.air_conditioning}
+                name={'Air Conditioning'}
+              />
+            </Box>
+          ) : (
+            <Box marginVertical="m">
+              <Text
+                variant={'regular'}
+                textAlign="center"
+                fontSize={14}
+                color="title">
+                No inspection information available
+              </Text>
+            </Box>
+          )}
         </Box>
       </ScrollView>
       <Box

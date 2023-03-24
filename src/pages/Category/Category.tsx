@@ -5,18 +5,19 @@ import Clickable from '../../Components/Clickable';
 import {car} from '../../assets';
 import Box from '../../Components/Box';
 import {assetUrl} from '../../helpers/constants';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   title: string;
   image: object;
   onPress: () => void;
 };
-export const Category: React.FC<Props> = ({active, title, image, onPress}) => {
+export const Category: React.FC<Props> = ({title, image}) => {
   useEffect(() => {}, [title]);
-  // console.log(`${assetUrl()}/${image}`);
+  const {navigate} = useNavigation();
   return (
     <Clickable
-      onPress={onPress}
+      onPress={() => navigate('Result', {searchTerm: title})}
       alignItems="center"
       justifyContent="space-around"
       // width="100%"

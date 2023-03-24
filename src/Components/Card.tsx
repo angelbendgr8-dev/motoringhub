@@ -37,6 +37,7 @@ const Card: React.FC<Params> = ({item}) => {
           height: heightPercentageToDP('15%'),
           borderRadius: 10,
           marginRight: mx3,
+          resizeMode: 'center',
         }}
       />
       <Box>

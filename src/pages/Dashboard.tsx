@@ -1,4 +1,4 @@
-import {ScrollView} from 'react-native';
+import {ActivityIndicator, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
 import Container from '../Components/Container';
 import Text from '../Components/Text';
@@ -23,14 +23,22 @@ import {useNavigation} from '@react-navigation/native';
 
 // const data = [{label: 'test', value: 'test'}];
 const ListHeader = () => {
+  const {navigate} = useNavigation();
   return (
     <Box>
       <ScrollView
         style={{marginVertical: heightPercentageToDP('4%')}}
         showsHorizontalScrollIndicator={false}
         horizontal={true}>
-        <Banner />
-        <Banner />
+        <Banner
+          header={'Make your car new again.'}
+          content={'Car maintenance and services'}
+          ctaPressed={() => navigate('Services')}
+        />
+        <Banner
+          header={'Sell/Buy a Car'}
+          content={'on our automobile marketplace'}
+        />
       </ScrollView>
       <CategoryList />
       <Hr />
@@ -60,8 +68,19 @@ const Dashboard = () => {
         <Box />
 
         <FlatList
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           data={cars.filter((car, index) => index <= 3)}
           keyExtractor={(item, index) => item + index}
+          ListEmptyComponent={() => (
+            <Box flex={1}>
+              {carsLoading ? (
+                <ActivityIndicator color={primary} />
+              ) : (
+                <Text variant="medium">Empty</Text>
+              )}
+            </Box>
+          )}
           renderItem={({item}) => <Card item={item} />}
           ListHeaderComponent={() => (
             <>
@@ -71,11 +90,7 @@ const Dashboard = () => {
                 alignItems="center"
                 justifyContent="space-between">
                 <Box flexDirection="row">
-                  <Text
-                    variant="bold"
-                    textT
-                    ransform="capitalize"
-                    fontSize={16}>
+                  <Text variant="bold" textTransform="capitalize" fontSize={16}>
                     {'Cars'}
                   </Text>
                   {/* {icon()} */}

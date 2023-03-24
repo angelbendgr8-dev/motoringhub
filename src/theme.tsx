@@ -22,6 +22,7 @@ const palette = {
   darktitle: '#EFEFEF',
   darkoutline: '#BABABA',
   success: '#1BC457',
+  danger: 'red',
 };
 
 export const theme = createTheme({
@@ -35,9 +36,11 @@ export const theme = createTheme({
     border: palette.border,
     grey: palette.lightgray,
     white: palette.white,
+    transparent: palette.transparent,
     outlineSecondary: palette.content,
     success: palette.success,
     info: palette.info,
+    danger: palette.danger,
   },
 
   spacing: {

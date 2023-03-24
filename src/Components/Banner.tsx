@@ -1,16 +1,21 @@
 import {ImageBackground} from 'react-native';
-import React from 'react';
+import React, {FC} from 'react';
 import Box from './Box';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import Text from './Text';
-import Button from './Button';
 import {help} from '../assets';
 import Clickable from './Clickable';
 
-const Banner = () => {
+type Props = {
+  header: string;
+  content: string;
+  ctaPressed: () => void;
+};
+
+const Banner: FC<Props> = ({header, content, ctaPressed}) => {
   return (
     <ImageBackground
       style={{
@@ -31,20 +36,20 @@ const Banner = () => {
         width="100%"
         flex={1}>
         <Text variant="medium" color="background">
-          Welcome to MotoringHub
+          {header}
         </Text>
         <Text
           variant="regular"
           color="background"
           marginVertical="my1"
           fontSize={12}>
-          Get You Vehincle purchased today
+          {content}
         </Text>
         <Clickable
           alignItems="center"
           justifyContent="center"
           flexDirection="row"
-          onPress={() => {}}
+          onPress={ctaPressed}
           borderRadius={3}
           width={widthPercentageToDP('30%')}
           backgroundColor="primary">

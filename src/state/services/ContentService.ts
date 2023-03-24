@@ -1,3 +1,4 @@
+import {RootState} from './../store';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {getUrl} from '../../helpers/constants';
 console.log(getUrl());
@@ -8,7 +9,7 @@ export const ContentApi = createApi({
     baseUrl: getUrl(),
     prepareHeaders: (headers, {getState}) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
-      const token = getState().userAuth.token;
+      const token = (getState() as RootState).userAuth.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -25,6 +26,12 @@ export const ContentApi = createApi({
     getCategories: builder.query({
       query: () => ({
         url: 'content/categories',
+      }),
+    }),
+    getAllBrands: builder.mutation({
+      query: () => ({
+        url: 'content/car/all/brands',
+        method: 'GET',
       }),
     }),
     getModels: builder.query({
@@ -53,5 +60,5 @@ export const {
   useGetLocationsQuery,
   useGetCarBrandsQuery,
   useGetModelsQuery,
-  useGetProductsQuery,
+  useGetAllBrandsMutation,
 } = ContentApi;

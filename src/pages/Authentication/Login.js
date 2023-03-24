@@ -58,7 +58,7 @@ const Login = () => {
           animationType: 'zoom-in',
         });
       } else {
-        // console.log(response);
+        console.log(response);
         toast.show(response?.message, {
           type: 'success',
           placement: 'top',

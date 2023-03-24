@@ -1,3 +1,4 @@
+import {RootState} from './../store';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {getUrl} from '../../helpers/constants';
 console.log(getUrl());
@@ -8,7 +9,7 @@ export const RequestApi = createApi({
     baseUrl: getUrl(),
     prepareHeaders: (headers, {getState}) => {
       // By default, if we have a token in the store, let's use that for authenticated requests
-      const token = getState().userAuth.token;
+      const token = (getState() as RootState).userAuth.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

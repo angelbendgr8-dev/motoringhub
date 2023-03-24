@@ -1,7 +1,5 @@
-import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Container from '../Components/Container';
-import Header from '../Components/Header';
 import Clickable from '../Components/Clickable';
 import Input from '../Components/Input';
 import Box from '../Components/Box';
@@ -10,15 +8,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useTheme} from '@shopify/restyle';
 import Modal from 'react-native-modal';
 import Text from '../Components/Text';
-import {useProduct} from '../state/hooks/product';
 import {FlatList} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import {useContent} from '../state/hooks/content';
+import {useDebounce} from 'usehooks-ts';
+import {ActivityIndicator} from 'react-native';
+import _ from 'lodash';
 
 type filterProps = {
   filter: string;
   visible: boolean;
   select: Function;
-  close: Function;
+  close: () => void;
 };
 
 const FilterSelection: React.FC<filterProps> = ({
@@ -138,13 +139,21 @@ const FilteredItem = ({item, pressed}) => {
     </Clickable>
   );
 };
-const FilteredCars = ({item, pressed}) => {
+const FilteredCars = ({
+  item,
+  pressed,
+}: {
+  item: string;
+  pressed: (item: string) => void;
+}) => {
   return (
     <Clickable
       flexDirection="row"
       alignItems="center"
-      onPress={() => pressed(item.model)}
+      onPress={() => pressed(item)}
       paddingVertical="mx2"
+      borderBottomColor="border"
+      borderBottomWidth={0.5}
       marginHorizontal="mx3"
       marginVertical="mx1">
       <Box
@@ -155,7 +164,7 @@ const FilteredCars = ({item, pressed}) => {
         borderRadius={60}
       />
       <Text variant="regular" color="content">
-        {item.model}
+        {item}
       </Text>
     </Clickable>
   );
@@ -163,27 +172,54 @@ const FilteredCars = ({item, pressed}) => {
 
 const Search = () => {
   const theme = useTheme();
-  const {white, title} = theme.colors;
+  const {white, title, primary} = theme.colors;
   const [showFilter, setShowFilter] = useState(false);
   const [filter, setFilter] = useState('cars');
-  const {cars, parts} = useProduct();
-  const [filtered, setFiltered] = useState([]);
-  const {navigate} = useNavigation();
+  const [cars, setCars] = useState<Array<string>>([]);
+  const {categories, allmodels} = useContent();
+  const [filtered, setFiltered] = useState<Array<string>>([]);
+  const {navigate, goBack} = useNavigation();
+  const [value, setValue] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+
+  const debouncedValue = useDebounce<string>(value, 3000);
 
   useEffect(() => {}, [filter, filtered]);
-
-  const search = input => {
-    if (filter === 'cars') {
-      const temp = cars.filter(item => item.model.includes(input));
-      setFiltered(temp);
+  const search = useCallback(
+    (input: string) => {
+      if (filter === 'cars') {
+        const temp = cars.filter((item: string) => item.includes(input));
+        setFiltered(temp);
+        setLoading(false);
+      } else {
+        navigate('PartsResult', {searchTerm: input});
+        setLoading(false);
+      }
+    },
+    [cars, navigate, filter],
+  );
+  useEffect(() => {
+    if (_.size(value) === 0) {
+      setFiltered([]);
     } else {
-      const temp = parts.filter(item => item.name.includes(input));
-      setFiltered(temp);
+      search(value);
     }
-  };
+  }, [debouncedValue]);
 
-  const pressed = term => {
-    navigate('Result', {searchTerm: term, type: filter});
+  useEffect(() => {
+    const cats = categories.map((category: any) => category.name);
+    const mod = allmodels.map((model: any) => model.full_name);
+    console.log(allmodels, 'data');
+    const searchable = [...cats, ...mod];
+    setCars(searchable);
+  }, [categories, allmodels]);
+
+  const pressed = (term: string) => {
+    // console.log(term);
+    if (filter === 'cars') {
+      navigate('Result', {searchTerm: term});
+    } else {
+    }
   };
 
   return (
@@ -201,15 +237,16 @@ const Search = () => {
         backgroundColor="primary"
         alignItems="center"
         paddingRight="mx4">
-        <Clickable onPress={() => {}} marginHorizontal="mx3">
+        <Clickable onPress={goBack} marginHorizontal="mx3">
           <Icon color={white} size={24} name="close" />
         </Clickable>
         <Box marginVertical="my2" flex={1}>
           <Input
             label={`Search ${filter}`}
-            value={{}}
+            value={value}
             onChange={input => {
-              search(input);
+              setLoading(true);
+              setValue(input);
             }}
             type="none"
             isLabel={false}
@@ -219,28 +256,25 @@ const Search = () => {
               </Clickable>
             )}
             leftIcon={() => (
-              <Clickable onPress={() => {}}>
-                <Icon color={title} size={20} name="search" />
-              </Clickable>
+              <Box>
+                {loading ? (
+                  <ActivityIndicator color={primary} />
+                ) : (
+                  <Clickable onPress={() => {}}>
+                    <Icon color={title} size={20} name="search" />
+                  </Clickable>
+                )}
+              </Box>
             )}
           />
         </Box>
       </Box>
-      {filter === 'parts' ? (
+      {!_.isEmpty(filtered) && (
         <FlatList
           data={filtered}
-          renderItem={({item}) => (
-            <FilteredItem item={item} pressed={pressed} />
+          renderItem={({item, index}) => (
+            <FilteredCars item={item} key={index} pressed={pressed} />
           )}
-          keyExtractor={item => item.id}
-        />
-      ) : (
-        <FlatList
-          data={filtered}
-          renderItem={({item}) => (
-            <FilteredCars item={item} pressed={pressed} />
-          )}
-          keyExtractor={item => item.id}
         />
       )}
     </Container>

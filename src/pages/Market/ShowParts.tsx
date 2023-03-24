@@ -1,4 +1,4 @@
-import {} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import React, {useEffect} from 'react';
 import Container from '../../Components/Container';
 import Box from '../../Components/Box';
@@ -13,7 +13,7 @@ import {setParts} from '../../state/reducers/productReducer';
 import {useProduct} from '../../state/hooks/product';
 import HCard from '../../Components/HCard';
 import Hr from '../../Components/Hr';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const ShowParts: React.FC<{}> = () => {
   const theme = useTheme();
@@ -37,6 +37,7 @@ const ShowParts: React.FC<{}> = () => {
   return (
     <Container>
       <Hr />
+      {isLoading && <ActivityIndicator color={primary} />}
       <Box
         flexDirection="row"
         alignItems="center"
@@ -47,7 +48,7 @@ const ShowParts: React.FC<{}> = () => {
           </Text>
           {/* {icon()} */}
         </Box>
-        <Clickable onPress={()=>navigate('Parts')}>
+        <Clickable onPress={() => navigate('Parts')}>
           <Text variant="regular" color="primary" fontSize={14}>
             See all
           </Text>
@@ -61,7 +62,7 @@ const ShowParts: React.FC<{}> = () => {
           ))}
         </Box>
       ) : (
-        <Text variant="medium">Loading</Text>
+        <Text variant="medium">Empty</Text>
       )}
     </Container>
   );

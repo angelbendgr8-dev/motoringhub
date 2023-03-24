@@ -3,7 +3,7 @@
 import {Service} from '../pages/Category/Services';
 
 export type MainStack = {
-  Dashboard: undefined;
+  Dashboard: BottomTabList;
   Drawer: undefined;
   ServiceDetails: {
     service: Service;
@@ -29,7 +29,8 @@ export type MainStack = {
   Cars: undefined;
   Parts: undefined;
   Search: undefined;
-  Result: {searchTerm: string; type: string};
+  Result: {searchTerm: string};
+  PartsResult: {searchTerm: string};
 };
 
 export type BottomTabList = {
