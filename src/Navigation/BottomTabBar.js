@@ -8,22 +8,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import User from 'react-native-vector-icons/FontAwesome';
 import Swap from 'react-native-vector-icons/MaterialCommunityIcons';
 import {fservices, services} from '../assets';
+import Box from '../Components/Box';
 
 export default function BottomTabBar({state, descriptors, navigation}) {
   const theme = useTheme();
   const {primary, title, background} = theme.colors;
   return (
-    <View
-      style={{
-        //   flex:1,
-        flexDirection: 'row',
-        alignItems: 'space-around',
-        backgroundColor: background,
-        justifyContent: 'space-evenly',
-
-        paddingVertical: 5,
-        elevation: 1,
-      }}>
+    <Box
+      flexDirection="row"
+      alignItems="space-around"
+      backgroundColor="background"
+      justifyContent="space-evenly"
+      borderTopWidth={0.3}
+      borderTopColor="title"
+      paddingVertical="s"
+      elevation={1}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -110,7 +109,7 @@ export default function BottomTabBar({state, descriptors, navigation}) {
           </TouchableOpacity>
         );
       })}
-    </View>
+    </Box>
   );
 }
 const styles = StyleSheet.create({

@@ -30,7 +30,10 @@ const FilterSelection: React.FC<filterProps> = ({
 }) => {
   return (
     <Box>
-      <Modal onBackButtonPress={close} isVisible={visible}>
+      <Modal
+        onBackdropPress={close}
+        onBackButtonPress={close}
+        isVisible={visible}>
         <Box backgroundColor="grey" paddingVertical="m">
           <Box borderBottomColor={'border'} borderBottomWidth={1}>
             <Text variant="medium" textAlign="center">

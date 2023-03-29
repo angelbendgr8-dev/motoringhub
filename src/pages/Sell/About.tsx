@@ -174,7 +174,7 @@ const About = () => {
   };
   return (
     <Container backgroundColor="background">
-      <Header leftIcon={true} text={''} />
+      <Header leftIcon={true}  text={`Upload ${type}`} />
       <Box flex={1} justifyContent="space-between">
         <ConfirmationModal
           visible={proceed}
@@ -346,7 +346,7 @@ const About = () => {
             childColor="white"
             onPress={handleSubmit(onSubmit)}
             type="primary"
-            label={type === 'parts' ? 'Upload Product' : 'Book Service'}
+            label={type === 'parts' ? 'Upload Product' : 'Schedule Inspection'}
           />
         </Box>
       </Box>

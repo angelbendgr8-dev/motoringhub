@@ -5,13 +5,20 @@ import Cars from './Cars';
 import Parts from './Parts';
 import Box from '../../Components/Box';
 import Header from '../../Components/Header';
+import {useNavigation} from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
 export function MarketTabs({}) {
+  const {navigate} = useNavigation();
   return (
-    <Box>
-      <Header leftIcon={true} text={'Cars'} />
+    <Box flex={1}>
+      <Header
+        leftIcon={true}
+        text={'Market Place'}
+        rightButtonClicked={() => navigate('Search')}
+        rightIcon={true}
+      />
       <Tab.Navigator
         tabBar={props => <MarketTabBar {...props} />}
         style={{flex: 1}}>

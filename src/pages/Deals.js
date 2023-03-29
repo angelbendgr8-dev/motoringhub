@@ -32,7 +32,7 @@ const HiwItem = ({image, text, content}) => {
       justifyContent="center"
       alignItems="flex-start"
       borderRadius={10}
-      width={widthPercentageToDP('43.1%')}
+      width={widthPercentageToDP('42.5%')}
       height={heightPercentageToDP('17%')}>
       <Box flexDirection="row" justifyContent="space-between">
         <Image source={image} style={{height: 20, width: 20}} />

@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import {useTheme} from '@shopify/restyle';
-import { useGetAllProductsMutation } from '../../state/services/ProductService';
+import {useGetAllProductsMutation} from '../../state/services/ProductService';
 import Container from '../../Components/Container';
+import Card from '../../Components/Card';
 
 const Cars = () => {
   const theme = useTheme();
@@ -40,8 +41,7 @@ const Cars = () => {
   }, [data, updateCars]);
 
   return (
-    <Container    >
-      <Header leftIcon={true} text={'Cars'} />
+    <Container>
       <FlatList
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

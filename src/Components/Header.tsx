@@ -18,6 +18,7 @@ type Props = {
   rightIcon?: boolean;
   closeIcon?: React.ReactFragment;
   bgColor?: string;
+  rightButtonClicked?: () => void;
 };
 const Header: React.FC<Props> = ({
   leftIcon = false,
@@ -25,6 +26,7 @@ const Header: React.FC<Props> = ({
   rightIcon = false,
   closeIcon,
   bgColor = 'primary',
+  rightButtonClicked,
 }) => {
   const {goBack} = useNavigation();
   const theme = useTheme();
@@ -52,7 +54,7 @@ const Header: React.FC<Props> = ({
             variant={'medium'}
             marginRight={'s'}
             color="background"
-            fontSize={RFValue(18)}>
+            fontSize={RFValue(16)}>
             {text}
           </Text>
         </Box>
@@ -60,11 +62,8 @@ const Header: React.FC<Props> = ({
 
       {rightIcon && (
         <Box flexDirection="row">
-          <Clickable paddingHorizontal="mx2">
+          <Clickable onPress={rightButtonClicked} paddingHorizontal="mx2">
             <Toggle name="search1" color={background} size={18} />
-          </Clickable>
-          <Clickable paddingHorizontal="mx2">
-            <Bell name="bell" color={background} size={18} />
           </Clickable>
 
           {/* <Clickable paddingHorizontal="mx2">

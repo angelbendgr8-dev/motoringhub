@@ -1,7 +1,7 @@
 import React from 'react';
 import {Animated, View, TouchableOpacity} from 'react-native';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
-import {TextCustom} from '../../Text';
+import Text from '../../Components/Text';
 
 export function MarketTabBar({state, descriptors, navigation, position}) {
   return (
@@ -71,12 +71,9 @@ export function MarketTabBar({state, descriptors, navigation, position}) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TextCustom
-              h4
-              bold
-              style={{color: isFocused ? 'black' : '#A5A5A5'}}>
+            <Text variant={'medium'} color={isFocused ? 'primary' : 'title'}>
               {label}
-            </TextCustom>
+            </Text>
           </TouchableOpacity>
         );
       })}

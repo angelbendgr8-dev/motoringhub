@@ -5,6 +5,7 @@ import Container from '../../Components/Container';
 import Header from '../../Components/Header';
 import Box from '../../Components/Box';
 import HCard from '../../Components/HCard';
+import {useGetAllPartsMutation} from '../../state/services/ProductService';
 
 const Parts = () => {
   const [hasMorePages, setHasMorePages] = useState(true);

@@ -4,6 +4,7 @@ import {createBox, useTheme} from '@shopify/restyle';
 import {Dropdown} from 'react-native-element-dropdown';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import Text from './Text';
+import {RFValue} from 'react-native-responsive-fontsize';
 const Box = createBox();
 
 type Props = {
@@ -27,7 +28,11 @@ const Select: React.FC<Props> = ({
   const renderItem = (item: any) => {
     return (
       <View style={[styles.item, {borderBottomColor: border}]}>
-        <Text variant={'regular'} color="content">
+        <Text
+          textTransform="capitalize"
+          variant={'regular'}
+          fontSize={RFValue(16)}
+          color="content">
           {item.label}
         </Text>
       </View>
